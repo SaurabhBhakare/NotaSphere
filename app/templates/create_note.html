@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title%}CreateNote{% endblock %}
+{% block content %}
+
+
+<div class="container">
+<form method="POST" class="my-5" enctype="multipart/form-data">
+    {% include 'msg.html' %}
+    <div class="card">
+        <div class="card-header text-center">
+            Create New Note
+        </div>
+        <div class="card-body">
+            <div class="mb-0">
+                <h5><input class="mb-4 bottom-border-input" type="text" name="title" placeholder="Title"
+                           required></h5>
+            </div>
+            <div class="mb-3">
+                <select type="button" class="btn btn-light" aria-label="Select Category" name="category" id="category" required>
+                    <option value="select">Select Category</option>
+                    {% for cat in category %}
+                    <option value="{{cat.id}}">{{cat.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-2">
+                <input class="bottom-border-input mb-0" type="checkbox" name="publish" id="publish" value="1">
+                <label for="publish" class="form-label mb-0">Publish</label><br>
+                <label for="publish" class="form-label"><small class="mt-0">By selecting this option your note will be available for all notebook users</small></label>
+            </div>
+            <div class="mb-3">
+                <input type="file" id="image" name="image"><br>
+                <label for="image"><small>* max size 2mb</small></label>
+            </div>
+            <div class="mb-3">
+                <textarea name="content" id="editor" rows="10" cols="80"></textarea>
+            </div>
+        </div>
+        <div class="card-footer text-body-secondary">
+            <button type="submit" class="btn btn-primary w-100">Save</button>
+        </div>
+    </div>
+</form>
+</div>
+
+<script>
+    ClassicEditor
+        .create(document.querySelector('#editor'))
+        .catch(error => {
+            console.error(error);
+        });
+</script>
+{% endblock %}

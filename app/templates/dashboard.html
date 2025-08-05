@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% block title%}Dashboard{% endblock %}
+{% block content %}
+
+<!-- dash board menu-->
+
+<div class="d-flex dashboard-main">
+    <!--    side menu start-->
+    <div class="sidebar d-flex flex-column p-3">
+        <a href="/" class="d-flex align-items-center mb-3 text-white text-decoration-none">
+            <i class="bi bi-journal-bookmark-fill fs-4 me-2"></i>
+            <span class="fs-5 fw-bold">Notebook</span>
+        </a>
+        <hr style="border-color: gray;">
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li><a href="{{ url_for('main.dashboard') }}" class="nav-link {% if view_type == 'all' %}active{% endif %}"><i class="bi bi-house me-2"></i>My
+                Notes</a></li>
+            <li><a href="{{ url_for('main.create_note') }}" class="nav-link"><i
+                    class="bi bi-file-earmark-plus me-2"></i>Create Notes</a></li>
+
+            <!--            collapsible menu  -->
+            <li>
+                <a data-bs-toggle="collapse" href="#homeSubmenu" role="button" aria-expanded="false" class="nav-link {% if view_type == 'category' %}active{% endif %}">
+                    <i class="bi bi-tags me-2"></i>Category
+                </a>
+                <div class="collapse ms-4" id="homeSubmenu">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                        <li><a href="{{ url_for('main.create_category') }}" class="nav-link"><i class="bi bi-plus-circle me-2"></i>Create New</a></li>
+                        {% for cat in all_category %}
+                        <li><a href="{{ url_for('main.category_notes', cat_id=cat.id) }}" class="nav-link"><i class="bi bi-tag me-2"></i>{{cat.name}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </li>
+
+            <li><a href="{{ url_for('main.favorite_notes') }}" class="nav-link {% if view_type == 'favorites' %}active{% endif %}"><i class="fa-regular fa-star me-2"></i>Favorite</a></li>
+            <li><a href="{{ url_for('main.published_notes') }}" class="nav-link {% if view_type == 'published' %}active{% endif %}"><i class="bi bi-journal-text me-2"></i>Published</a></li>
+            <li><a href="{{ url_for('main.deleted_notes') }}" class="nav-link {% if view_type == 'deleted' %}active{% endif %}"><i class="fa-solid fa-trash me-2"></i>Deleted</a></li>
+        </ul>
+
+        <hr style="border-color: gray;">
+        <div class="dropdown">
+            <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+               data-bs-toggle="dropdown">
+                {% if current_user.image_file %}
+                <img src="{{ url_for('static', filename='profile/' ~ current_user.image_file) }}" alt="" width="32" height="32" class="rounded-circle me-2">
+                {% else %}
+                <img src="{{ url_for('static', filename='profile/user.png') }}" alt="" width="32" height="32" class="rounded-circle me-2">
+                {% endif %}
+                <strong>{{current_user.username}}</strong>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark">
+                <li><a class="dropdown-item" href="#">Profile</a></li>
+                <li><a class="dropdown-item" href="#">Settings</a></li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="#">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- end side menu -->
+
+    <!-- Main cards content area -->
+    <div class="main-content">
+        <h1>Notebook Nexus</h1>
+        <p class="text-muted">
+            {% if view_type == 'all' %} NotesTake good notes from now on
+            {% elif view_type == 'category' %} Sort and Find What Matters Most<br>Category : {{category_name.name}}
+            {% elif view_type == 'favorites' %} Quick Access to What You Cherish Most
+            {% elif view_type == 'published' %} Your Public Thoughts, Open to All
+            {% elif view_type == 'deleted' %} Recently Removed, Not Yet Forgotten
+            {% endif %}
+        </p>
+        {% include 'msg.html' %}
+        <div class="d-flex flex-wrap">
+            {% for note in notes %}
+            <div class="col note-card">
+                    <div class="card h-auto dashboard-cards">
+                <a class="text-decoration-none text-dark" href="{{ url_for('main.view_note', note_id=note.id) }}">
+                        {% if note.image_file %}
+                        <img class="thumb card-img-top p-2"
+                             src="{{ url_for('static', filename='uploads/' ~ note.image_file) }}"
+                             alt="note image">
+                        {% else %}
+                        <img class="thumb card-img-top p-2"
+                             src="{{ url_for('static', filename='uploads/' ~ note.category.image_file) }}"
+                             alt="note image">
+                        {% endif %}
+                        <div class="card-body p-1 mb-0">
+                            <h5 class="card-title">{{note.title}}</h5>
+                            <p class="card-text">{{note.content[:40] | safe }}...</p>
+                        </div>
+                        <div class="card-footer d-flex position-relative">
+                            <small class="text-body-secondary">Created {{note.created_at.strftime('%d-%B-%Y')}}</small>
+                            <small class="text-body-secondary position-absolute end-0 me-2">Updated {{
+                                note.time_since_created
+                                }}</small>
+                        </div>
+                        {% if view_type == 'deleted' %}
+                        <div class="card-footer p-0">
+                            <a href="/note/{{note.id}}/restore" class="btn btn-info w-100 p-0 text-decoration-none"><small>Restore</small></a>
+                            <a href="/note/{{note.id}}/delete" class="btn btn-danger w-100 p-0 text-decoration-none"><small>Permanent Delete</small></a>
+                        </div>
+                        {% endif %}
+                </a>
+                    </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- end cards -->
+
+{% endblock %}

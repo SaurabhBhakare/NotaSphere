@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title%}Register{% endblock %}
+{% block content %}
+<div class="container min-vh-100 d-flex justify-content-center align-items-center">
+    <form class="border rounded p-4 shadow" style="width: 400px; background:#FFBF78" method="POST" enctype="multipart/form-data">
+        <h3 class="text-center mb-4">Register</h3>
+        {% include 'msg.html' %}
+        <div class="mb-3">
+            <label for="username" class="form-label">User Name</label>
+            <input type="text" class="form-control" name="username" id="username" required>
+        </div>
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" name="name" id="name" required>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email address</label>
+            <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" required>
+        </div>
+        <div class="mb-3">
+            <input type="file" id="image" name="image"><br>
+            <label for="image"><small>* max size 2mb</small></label>
+        </div>
+        <div class="mb-3">
+            <label for="password1" class="form-label">Password</label>
+            <input type="password" class="form-control" name="password1" id="password1" required>
+        </div>
+        <div class="mb-3">
+            <label for="password2" class="form-label">Confirm Password</label>
+            <input type="password" class="form-control" name="password2" id="password2" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Submit</button>
+    </form>
+</div>
+{% endblock %}

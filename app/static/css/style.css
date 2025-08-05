@@ -1,0 +1,199 @@
+.container-fluid {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+body {
+  margin: 0;
+}
+
+
+    /* Optional: Style for a subtle bottom border effect within Bootstrap context */
+    .bottom-border-input {
+      border: none;
+      outline: none;
+      box-shadow: none;
+      background-color: transparent;
+      border-bottom: 1px solid #dee2e6; /* Bootstrap's default border color */
+      border-radius: 0; /* Remove rounded corners */
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    /* Focus styles for the bottom border input */
+    .bottom-border-input:focus {
+      border-color: #80bdff; /* Bootstrap's default focus border color */
+      box-shadow: none;
+    }
+
+    /* Style for a container for better visibility */
+    .input-container {
+      padding: 20px;
+      background-color: #f8f9fa; /* Light background for contrast */
+      margin-bottom: 20px;
+      border-radius: .25rem;
+    }
+
+
+/* Dashboard card styles */
+
+.dashboard-main{
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.dashboard-cards {
+    width: 220px;
+    height: 310px;
+    overflow: hidden;
+    font-size: 0.85rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s;
+}
+
+.dashboard-cards:hover {
+    transform: translateY(-5px);
+}
+
+.dashboard-cards .card-img-top.thumb {
+    width: 100%;
+    height: 130px;
+    object-fit: cover;
+    border-radius: 8px 8px 0 0;
+}
+
+.dashboard-cards .card-body {
+    padding: 10px;
+    text-align: left;
+}
+
+.dashboard-cards .card-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dashboard-cards .card-text {
+    font-size: 0.8rem;
+    line-height: 1.2;
+    max-height: 36px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dashboard-cards .card-footer {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.5rem;
+    background-color: transparent;
+    border-top: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    color: #6c757d;
+}
+
+/* Sidebar styles */
+body {
+    margin: 0;
+    display: flex;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    background-color: #212529;
+    color: white;
+    flex-shrink: 0;
+}
+
+.sidebar .nav-link {
+    color: #fff;
+    font-size: 16px;
+}
+
+.sidebar .nav-link.active {
+    background-color: #0d6efd;
+    color: #fff;
+}
+
+.sidebar .nav-link:hover {
+    background-color: #0d6efd90;
+    color: white;
+}
+
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #f8f9fa;
+}
+
+.note-card {
+    margin: 10px;
+}
+
+
+/* Custom Styles */
+.intro-section {
+    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+    color: #333;
+    padding: 80px 20px;
+    text-align: center;
+}
+.intro-section .container{
+    height: 250px
+}
+.favorite-section {
+    padding: 60px 20px;
+    /*  background-color: #f8f9fa;  */
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1);
+    text-align: center;
+}
+
+.gallery-section {
+    padding: 60px 20px;
+    /* background-color: #e9ecef; */
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1);
+    text-align: center;
+}
+.gallery-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+
+/*   check box to star representation */
+/* Hide the default checkbox */
+.hidden-checkbox {
+    display: none;
+}
+
+/* Style the label to look like a star */
+.star-checkbox-label {
+    cursor: pointer;
+    /* font-size: 2em;  Adjust size as needed */
+    color: #ccc; /* Default star color (unselected) */
+    transition: color 0.2s;
+}
+
+/* Change star color when the checkbox is checked */
+.hidden-checkbox:checked + .star-checkbox-label {
+    color: #FFD700; /* Gold color for selected star */
+}
+
+/* Optional: Hover effect */
+.star-checkbox-label:hover {
+    color: #FFA500; /* Orange on hover */
+}
+
+/*   for active tag   */
+.nav-link.active {
+  background-color: #0d6efd;
+  color: white;
+  font-weight: bold;
+}

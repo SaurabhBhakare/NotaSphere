@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title%}My Note{% endblock %}
+{% block content %}
+
+<div class="container">
+    <div class="card my-5">
+        <div class="card-header text-body-secondary position-relative">
+            <div class="text-center">
+                My Note: {{note.title}}
+            </div>
+            <div class="position-absolute top-0 end-0 mt-3 me-4">
+                {% if note.favorite %}
+                <i class="fa-solid fa-star"></i>
+                {% else %}
+                <i class="fa-regular fa-star"></i>
+                {% endif %}
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="ms-2">
+                <h5>{{ note.title }}</h5>
+            </div>
+            <div class="mb-0 mt-2">
+                <select type="button" class="btn btn-light" name="category" id="category">
+                    <option value="select">{{ note.category.name }}</option>
+                </select>
+            </div>
+            <div class="ms-2">
+                {% if note.publish %}
+                <small>Published: Yes</small>
+                {% else %}
+                <small>Published: No</small>
+                {% endif %}
+            </div>
+            <div class="mb-3">
+                <p class="card-text">{{ note.content | safe }}</p>
+            </div>
+        </div>
+        <div class="card-footer text-body-secondary position-relative">
+            Created on {{note.created_at.strftime('%d-%B-%Y')}} ||
+            Updated {{ note.time_since_created }}
+            <div class="position-absolute top-0 end-0">
+                <a href="{{ url_for('main.edit_note', note_id=note.id) }}" class="btn btn-warning mt-1"> Edit </a>
+                <a href="/note/{{note.id}}/trash" class="btn btn-danger me-2 mt-1">Detete</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

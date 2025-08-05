@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block title%}Edit Note{% endblock %}
+{% block content %}
+
+
+<div class="container">
+    <form method="POST" class="my-5" enctype="multipart/form-data">
+        {% include 'msg.html' %}
+        <div class="card">
+            <div class="card-header text-body-secondary position-relative">
+                <div class="text-center">
+                    Edit: {{note.title}}
+                </div>
+                <div class="position-absolute top-0 end-0 mt-3 me-4">
+                    <input type="checkbox" name="favorite" id="favorite" value="1" class="hidden-checkbox" {% if
+                           note.favorite %} checked {% endif %}>
+                    <label for="favorite" class="star-checkbox-label">
+                    <i class="fa-solid fa-star"></i></label>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="mb-0">
+                    <h5><input class="mb-4 bottom-border-input" type="text" name="title" value="{{note.title}}"
+                               required></h5>
+                </div>
+                <div class="mb-2">
+                    <select type="button" class="btn btn-light" name="category" id="category">
+                        <option value="{{note.category_id}}">{{note.category.name}}</option>
+                        {% for cat in all_category %}
+                        {% if not note.category.name == cat.name %}
+                        <option value="{{cat.id}}">{{cat.name}}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <input class="bottom-border-input mb-0" type="checkbox" name="publish" id="publish" value="1" {% if
+                           note.publish %} checked {% endif %}>
+                    <label for="publish" class="form-label mb-0">Publish</label><br>
+                    <label for="publish" class="form-label"><small class="mt-0">By selecting this option your note will
+                        be available for all notebook users</small></label>
+                </div>
+                <!--            <div class="mb-3">-->
+                <!--                <input type="file" name="image" value="{{note.image_file}}">-->
+                <!--            </div>-->
+                <div class="mb-3">
+                    <textarea name="content" id="editor" rows="10" cols="80">{{ note.content | safe }}</textarea>
+                </div>
+            </div>
+            <div class="card-footer text-body-secondary position-relative">
+                Created on {{note.created_at.strftime('%d-%B-%Y')}} ||
+                Updated {{ note.time_since_created }}
+                <div class="position-absolute top-0 end-0">
+                    <button type="submit" class="btn btn-primary w-100 me-5 mt-2">Save</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    ClassicEditor
+        .create(document.querySelector('#editor'))
+        .catch(error => {
+            console.error(error);
+        });
+</script>
+{% endblock %}
+

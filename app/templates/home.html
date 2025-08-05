@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% block title%}Home{% endblock %}
+{% block content %}
+
+
+<!-- Section 1: Intro -->
+<section class="intro-section">
+    <div class="container">
+        <h4 class="display-6 fw-bold mt-5">Your Thoughts, Organized. Your World, Captured.</h4>
+        <!--        <p class="lead mt-3">Your personal digital notebook. Capture thoughts, ideas & inspiration in one place.</p>-->
+        <p>Welcome to your personal notes universe—where inspiration meets organization. Whether it’s a poetic spark, a
+            grocery list, or your monthly budget, you’re in full control. Dive in, create freely, and let your ideas
+            find a home</p>
+    </div>
+</section>
+
+
+
+<!-- Section 2: Public Notes -->
+<section class="favorite-section">
+    <div class="container">
+        <h2 class="text-center">Speak Your Mind. Share Your World.</h2>
+        <p class="mb-5">Welcome to the collective heartbeat of the community—where personal reflections meet public expression.
+            Whether it’s a piece of poetry, a motivational thought, or a useful tip, this is your stage to inspire and
+            be inspired. Post your note for the world to see, explore others’ ideas, and find connections through shared
+            words.</p>
+        <div class="d-flex flex-wrap">
+            {% for note in published_notes %}
+            <div class="col note-card">
+                <div class="card h-auto dashboard-cards">
+                    <a class="text-decoration-none text-dark" href="{{ url_for('main.view_note', note_id=note.id) }}">
+                        {% if note.image_file %}
+                        <img class="thumb card-img-top p-2"
+                             src="{{ url_for('static', filename='uploads/' ~ note.image_file) }}"
+                             alt="note image">
+                        {% else %}
+                        <img class="thumb card-img-top p-2"
+                             src="{{ url_for('static', filename='img/lightSpot.jpg') }}"
+                             alt="note image">
+                        {% endif %}
+                        <div class="card-body p-1 mb-0">
+                            <h5 class="card-title">{{note.title}}</h5>
+                            <p class="card-text">{{note.content[:40] | safe }}...</p>
+                        </div>
+                        <div class="card-footer d-flex position-relative">
+                            <small class="text-body-secondary">Created {{note.created_at.strftime('%d-%B-%Y')}}</small>
+                            <small class="text-body-secondary position-absolute end-0 me-2">Updated {{
+                                note.time_since_created
+                                }}</small>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+
+
+<!-- Section 3: Favorite Notes -->
+<section class="favorite-section">
+    <div class="container">
+        <h2 class="text-center">Star What Matters. Access What Inspires.</h2>
+        <p class="mb-5">Your most cherished notes live here—pinned, preserved, and always within reach. From heartwarming poems to
+            important reminders, never lose sight of what truly matters to you. Mark your favorites and make this space
+            uniquely yours.</p>
+        <div class="d-flex flex-wrap">
+            {% if favorite_notes %}
+            {% for note in favorite_notes %}
+            <div class="col note-card">
+                <div class="card h-auto dashboard-cards">
+                    <a class="text-decoration-none text-dark" href="{{ url_for('main.view_note', note_id=note.id) }}">
+                        {% if note.image_file %}
+                        <img class="thumb card-img-top p-2"
+                             src="{{ url_for('static', filename='uploads/' ~ note.image_file) }}"
+                             alt="note image">
+                        {% else %}
+                        <img class="thumb card-img-top p-2"
+                             src="{{ url_for('static', filename='img/lightSpot.jpg') }}"
+                             alt="note image">
+                        {% endif %}
+                        <div class="card-body p-1 mb-0">
+                            <h5 class="card-title">{{note.title}}</h5>
+                            <p class="card-text">{{note.content[:40] | safe }}...</p>
+                        </div>
+                        <div class="card-footer d-flex position-relative">
+                            <small class="text-body-secondary">Created {{note.created_at.strftime('%d-%B-%Y')}}</small>
+                            <small class="text-body-secondary position-absolute end-0 me-2">Updated {{
+                                note.time_since_created
+                                }}</small>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+
+<!-- Section 4: Gallery -->
+<section class="gallery-section">
+    <div class="container">
+        <h2 class="text-center">Every Note Has a Visual Story.</h2>
+        <p class="mb-5">Scroll through a gallery of moments captured visually—images you’ve added alongside your thoughts and ideas.
+            Whether it’s receipts, memories, or creative doodles, the gallery brings your notes to life in full color
+            and context.</p>
+        <div class="row g-3">
+            <!-- Image Grid -->
+            {% if gallery %}
+            {% for note in gallery %}
+            {% if note.image_file %}
+            <div class="col-6 col-md-4 col-lg-3">
+                <img src="{{ url_for('static', filename='uploads/' ~ note.image_file) }}" class="gallery-img"
+                     alt="Note Image">
+            </div>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}
